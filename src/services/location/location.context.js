@@ -1,6 +1,5 @@
 import { useEffect, createContext, useState } from "react";
-import { locations } from "./location.mock";
-import { locationTransform } from "./location.service";
+import { locationRequest, locationTransform } from "./location.service";
 export const LocationContext = createContext();
 export const LocationContextProvider = ({ children }) => {
   const [keyword, setKeyword] = useState("San francisco");
@@ -19,6 +18,7 @@ export const LocationContextProvider = ({ children }) => {
     locationRequest(keyword.toLowerCase())
       .then(locationTransform)
       .then((result) => {
+        setError(null);
         setIsLoading(false);
         setLocation(result);
       })
@@ -42,12 +42,4 @@ export const LocationContextProvider = ({ children }) => {
   );
 };
 
-export const locationRequest = (searchKeyword = "San francisco") => {
-  return new Promise((resolve, reject) => {
-    const locationMock = locations[searchKeyword];
-    if (!locationMock) {
-      reject("not found");
-    }
-    resolve(locationMock);
-  });
-};
+

@@ -3,7 +3,7 @@ import { Camera, CameraType } from "expo-camera";
 import { useContext, useRef, useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
-export const CameraScreen = () => {
+export const CameraScreen = ({navigation}) => {
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const { user } = useContext(AuthenticationContext);
@@ -12,6 +12,7 @@ export const CameraScreen = () => {
     if (cameraRef) {
       const photo = await cameraRef.current.takePictureAsync();
       AsyncStorage.setItem(`${user.uid}-photo`, photo.uri);
+      navigation.goBack();
     }
   };
 
