@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { Card } from "react-native-paper";
+import { Dimensions } from "react-native";
+const windowWidth = Dimensions.get("window").width;
 export const RestaurantCard = styled(Card)`
   background-color: ${(props) => props.theme.colors.bg.primary}};
+  width: ${windowWidth * 0.95}px;
+  align-self: center;
 `;
 
 export const RestaurantCardCover = styled(Card.Cover)`

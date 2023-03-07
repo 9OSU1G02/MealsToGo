@@ -9,13 +9,23 @@ import { TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
-
+import { colors } from "../../../infrastructure/theme/colors";
 const SettingsItem = styled(List.Item)`
   padding: ${(props) => props.theme.space[3]};
 `;
 const AvatarContainer = styled.View`
   align-items: center;
 `;
+
+const SettingsBackground = styled.ImageBackground.attrs({
+  source: require("../../../../assets/home_bg.jpg"),
+})`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+`;
+
+
 export const SettingsScreen = ({ navigation }) => {
   const { onLogout, user } = useContext(AuthenticationContext);
   const [photo, setPhoto] = useState(null);
@@ -31,19 +41,14 @@ export const SettingsScreen = ({ navigation }) => {
         getProfilePicture(user);
       }, [])
     );
-
-//   useFocusEffect(
-//     () => {
-//         getProfilePicture(user);
-//     }
-//   )
   return (
+    
     <SafeArea>
       <AvatarContainer>
         <TouchableOpacity onPress={() => navigation.navigate("CameraScreen")}>
           {photo && <Avatar.Image size={180} source={{ uri: photo }} />}
           {!photo && (
-            <Avatar.Icon size={180} icon="human" backgroundColor="#2182BD" />
+            <Avatar.Icon size={180} icon="human" backgroundColor={colors.brand.primary} />
           )}
         </TouchableOpacity>
         <Spacer size="large">
@@ -54,7 +59,7 @@ export const SettingsScreen = ({ navigation }) => {
         <SettingsItem
           title="Favorites"
           description="View your favorites"
-          left={(props) => <List.Icon {...props} color="black" icon="heart" />}
+          left={(props) => <List.Icon {...props} color={colors.brand.secondary} icon="heart" />}
           onPress={() => navigation.navigate("FavoritesScreen")}
         />
         <SettingsItem
